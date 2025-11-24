@@ -1,0 +1,31 @@
+{
+  "name": "bookbase",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "compile": "hardhat compile",
+    "deploy:base-sepolia": "hardhat run scripts/deploy.ts --network base_sepolia",
+    "deploy:base": "hardhat run scripts/deploy.ts --network base"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.1.1",
+    "frog": "^0.14.3",
+    "next": "^14.2.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "^2.21.15",
+    "wagmi": "^2.12.17"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
+    "@types/node": "^20.14.10",
+    "@types/react": "19.2.2",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
