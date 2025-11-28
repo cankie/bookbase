@@ -1,4 +1,4 @@
-// C:\basebook\abis\BookBadgeV2.ts
+// C:\basebook\components\BookBadgeV2Abi.ts
 const abi = [  {
       "inputs": [],
       "stateMutability": "nonpayable",
