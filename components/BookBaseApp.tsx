@@ -25,7 +25,9 @@ const config = createConfig({
     [base.id]: http(),
   },
   connectors: [
-    injected({ target: 'injected', shimDisconnect: true }),
+    injected({
+ shimDisconnect: true 
+}),
   ],
   ssr: false,
 });
