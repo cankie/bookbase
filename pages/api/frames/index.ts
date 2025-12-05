@@ -7,7 +7,17 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 app.frame('/', (c) => c.res({
   image: `${baseUrl}/api/frames/image`,
-  intents: [ <Button.Link href={baseUrl}>Open BookBase</Button.Link>, <Button.Link href={`${baseUrl}?from=frame`}>Log a Book</Button.Link> ],
+  intents: [
+  {
+    label: "Open BookBase",
+    href: baseUrl
+  },
+  {
+    label: "Log a Book",
+    href: `${baseUrl}?from=frame`
+  }
+],
+
   text: 'Track what you read. Mint a badge on Base.'
 }));
 
