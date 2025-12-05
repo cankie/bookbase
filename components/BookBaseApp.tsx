@@ -176,23 +176,25 @@ function InnerApp() {
         : 0n;
 
       const tx = await writeContractAsync({
-        address: addr as `0x${string}`,
-        abi,
-        chainId: base.id, // 🔥 always send on BASE
-        functionName: 'logBook',
-        args: [
-          form.title,
-          form.author,
-          form.isbn,
-          form.place,
-          form.mood,
-          form.timeLabel,
-          form.fragment,
-          form.photoUri,
-          form.coverUri,
-          finishedAt,
-        ],
-      });
+  address: addr as `0x${string}`,
+  abi,
+  functionName: 'logBook',
+  args: [
+    form.title,
+    form.author,
+    form.isbn,
+    form.place,
+    form.mood,
+    form.timeLabel,
+    form.fragment,
+    form.photoUri,
+    form.coverUri,
+    finishedAt,
+  ],
+  chain: base,        // wagmi v2 requirement
+  account: address!,  // user wallet
+});
+
 
       console.log('tx sent', tx);
       alert('Submitted! Check your wallet / explorer.');
