@@ -191,8 +191,8 @@ function InnerApp() {
     form.coverUri,
     finishedAt,
   ],
-  chain: base,        // wagmi v2 requirement
-  account: address!,  // user wallet
+  chain: base,        
+  account: address!,  
 });
 
 
