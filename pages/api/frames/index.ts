@@ -1,22 +1,15 @@
-import { app } from "@/lib/frog";
-import { NextApiRequest, NextApiResponse } from "next";
+import { Frame, ImageResponse } from "frog";
 
 export const config = {
   runtime: "edge",
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  return app.fetch(req, res);
-}
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://yourdomain.com";
-
-// MAIN FRAME
-app.frame("/", (c) =>
-  c.res({
+export default async function handler(req: Request) {
+  const frame = new Frame({
     image: `${baseUrl}/api/frames/image`,
     text: "Track what you read. Mint a badge on Base.",
-
     intents: [
       {
         type: "button",
@@ -29,5 +22,7 @@ app.frame("/", (c) =>
         action: `${baseUrl}?from=frame`,
       },
     ],
-  })
-);
+  });
+
+  return frame.toResponse();
+}
