@@ -1,28 +1,28 @@
-import { Frame, ImageResponse } from "frog";
-
-export const config = {
-  runtime: "edge",
-};
+import { app } from "frog";
+export const config = { runtime: "edge" };
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-export default async function handler(req: Request) {
-  const frame = new Frame({
+// MAIN FRAME
+app.frame("/", (c) =>
+  c.res({
     image: `${baseUrl}/api/frames/image`,
     text: "Track what you read. Mint a badge on Base.",
+
     intents: [
       {
-        type: "button",
+        type: "link",
         label: "Open BookBase",
-        action: baseUrl,
+        href: baseUrl,
       },
       {
-        type: "button",
+        type: "link",
         label: "Log a Book",
-        action: `${baseUrl}?from=frame`,
+        href: `${baseUrl}?from=frame`,
       },
     ],
-  });
+  })
+);
 
-  return frame.toResponse();
-}
+// EXPORT HANDLER
+export default app.fetch;
