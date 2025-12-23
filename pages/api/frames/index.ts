@@ -1,34 +1,33 @@
-// Next.js API route using Frog
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { Frog, Button } from 'frog';
+import { app } from "@/lib/frog";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const app = new Frog({ title: 'BookBase', imageAspectRatio: '1.91:1' });
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+export const config = {
+  runtime: "edge",
+};
 
-app.frame('/', (c) =>
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  return app.fetch(req, res);
+}
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://yourdomain.com";
+
+// MAIN FRAME
+app.frame("/", (c) =>
   c.res({
     image: `${baseUrl}/api/frames/image`,
+    text: "Track what you read. Mint a badge on Base.",
+
     intents: [
       {
         type: "button",
         label: "Open BookBase",
-        action: baseUrl
+        action: baseUrl,
       },
       {
         type: "button",
         label: "Log a Book",
-        action: `${baseUrl}?from=frame`
-      }
+        action: `${baseUrl}?from=frame`,
+      },
     ],
-    text: "Track what you read. Mint a badge on Base."
   })
 );
-
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const request = new Request(`${baseUrl}${req.url}`, { method: req.method });
-  const response = await app.fetch(request);
-  response.headers.forEach((v, k) => res.setHeader(k, v));
-  const text = await response.text();
-  res.status(response.status).send(text);
-}
