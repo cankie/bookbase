@@ -5,16 +5,25 @@ import { Frog, Button } from 'frog';
 const app = new Frog({ title: 'BookBase', imageAspectRatio: '1.91:1' });
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
-app.frame('/', (c) => c.res({
-  image: `${baseUrl}/api/frames/image`,
- intents: [
-  { label: "Open BookBase", href: baseUrl },
-  { label: "Log a Book", href: `${baseUrl}?from=frame` }
-],
+app.frame('/', (c) =>
+  c.res({
+    image: `${baseUrl}/api/frames/image`,
+    intents: [
+      {
+        type: "button",
+        label: "Open BookBase",
+        action: baseUrl
+      },
+      {
+        type: "button",
+        label: "Log a Book",
+        action: `${baseUrl}?from=frame`
+      }
+    ],
+    text: "Track what you read. Mint a badge on Base."
+  })
+);
 
-
-  text: 'Track what you read. Mint a badge on Base.'
-}));
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const request = new Request(`${baseUrl}${req.url}`, { method: req.method });
