@@ -25,14 +25,24 @@ const config = createConfig({
     [base.id]: http(),
   },
   connectors: [
-  injected({
-    shimDisconnect: true,
-    id: 'injected',
-  }),
-],
-
+    injected({
+      shimDisconnect: true,
+      //
+      // IMPORTANT — wagmi v2 requires target to be a function returning a provider object
+      //
+      target: () => ({
+        id: 'injected',
+        name: 'Injected Wallet',
+        provider:
+          typeof window !== 'undefined'
+            ? (window as any).ethereum
+            : undefined,
+      }),
+    }),
+  ],
   ssr: false,
 });
+
 
 // -------------------------
 // MAIN INNER APP
