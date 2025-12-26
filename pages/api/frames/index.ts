@@ -4,24 +4,14 @@ export const config = {
   runtime: "edge",
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
 app.frame("/", (c) =>
   c.res({
-    image: `${baseUrl}/api/frames/image`,
-    text: "Track what you read. Mint a badge on Base.",
+    image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/frames/image`,
     intents: [
-      {
-        type: "link",
-        label: "Open BookBase",
-        href: baseUrl,
-      },
-      {
-        type: "link",
-        label: "Log a Book",
-        href: `${baseUrl}?from=frame`,
-      },
+      { label: "Open BookBase", href: process.env.NEXT_PUBLIC_BASE_URL },
+      { label: "Log a Book", href: `${process.env.NEXT_PUBLIC_BASE_URL}?from=frame` },
     ],
+    text: "Track what you read. Mint a badge on Base.",
   })
 );
 
