@@ -1,18 +1,23 @@
-import { app } from "frog";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { getFrameHtml } from "frog";
 
 export const config = {
   runtime: "edge",
 };
 
-app.frame("/", (c) =>
-  c.res({
-    image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/frames/image`,
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+  const html = getFrameHtml({
+    image: `${baseUrl}/api/frames/image`,
     intents: [
-      { label: "Open BookBase", href: process.env.NEXT_PUBLIC_BASE_URL },
-      { label: "Log a Book", href: `${process.env.NEXT_PUBLIC_BASE_URL}?from=frame` },
+      { label: "Open BookBase", href: baseUrl },
+      { label: "Log a Book", href: `${baseUrl}?from=frame` },
     ],
     text: "Track what you read. Mint a badge on Base.",
-  })
-);
+  });
 
-export default app.fetch;
+  return new Response(html, {
+    headers: { "Content-Type": "text/html" },
+  }) as any;
+}
